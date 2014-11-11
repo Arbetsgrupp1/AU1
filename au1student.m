@@ -400,5 +400,19 @@ global docked   % ==0: Satelites NOT docked,  ==1: Satelites docked
 % 
 % Delete the two dummy lines below and put new code here
 
-  XNEW = X;
-  VNEW = V;
+VNEW = V;
+XNEW = X;
+
+if( (X(1,2) - X(1,1)) <= 5)
+    if( (V(1,1) - V(1.2)) <= 2)
+        docked = 1;
+    else
+        %Stöt eftersom hastigheten är större än 2m/s
+    end
+else % Sateliterna är inte tillräkligt nära för att docka/kollidera
+end
+
+%Uppdatera position
+acc = F(1,1)/M(1,1); % Variabel för accerlationen a = f/m
+VNEW(1,1) = V(1,1) + acc*dt;
+XNEW(1,1) = X(1,1) + VNEW(1,1)*dt;
