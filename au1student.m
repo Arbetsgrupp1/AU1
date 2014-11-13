@@ -400,13 +400,19 @@ global docked   % ==0: Satelites NOT docked,  ==1: Satelites docked
 % 
 % Delete the two dummy lines below and put new code here
 
-VNEW = V;
-XNEW = X;
+VNEW = V; % Skapar en matris för VNEW som är lika stor som V
+XNEW = X; % Skapar en matrivs för XNEW som är lika stor som X
 
-if( (X(1,2) - X(1,1)) <= 5)
-    if( (V(1,1) - V(1.2)) <= 2)
+if (docked == 1) % Om sateliterna har dockat så ska en viss typ av uträkning ske
+    
+end
+    
+
+if( (X(1,2) - X(1,1)) <= 5) %Vilkor för att Dokning eller colision ska ske
+    if( (V(1,1) - V(1.2)) <= 2) %Vilkor för att Dockning sker 
         docked = 1;
-    else
+    else % Docking ej uppfyyllt alltså en elastisk stöt
+         
         %Stöt eftersom hastigheten är större än 2m/s
     end
 else % Sateliterna är inte tillräkligt nära för att docka/kollidera
