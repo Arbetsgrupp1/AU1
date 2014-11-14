@@ -402,6 +402,8 @@ global docked   % ==0: Satelites NOT docked,  ==1: Satelites docked
 
 %VNEW = V; % Skapar en matris för VNEW som är lika stor som V
 %XNEW = X; % Skapar en matrivs för XNEW som är lika stor som X
+VNEW = zeros(3,2);
+XNEW = zeros(3,2);
 
 if (docked == 1)
     %Utför hastighets och positions beräkning för nya sateliten som är m1 +
@@ -413,15 +415,21 @@ if (docked == 1)
 else
     if( abs(X(1,1) - X(1,2)) <= 5 )
         if( abs(V(1,1) - V(1,2)) <= 2 )
-            %UTFÖR OELASTISK STÖT
-            Velo = V(1,1); % Hastigheten som satelite 1 har innan stöten
-            V(1,1)
-            
+            %Inelastiks
+            docked = 1; % Sateliterna har lyckats att docka
+            V(1,1) = (M(1,1)./(M(1,1) + M(2,2))) .* V(1,1);
+            V(1,2) = V(1,1);
         else
-            %UTFÖR ELASTISK
+            %Elastisk
+            Vold = V(1,1);
+            V(1,1) = ((M(1,1)- M(2,2)) ./ ( M(1,1) + M(2,2))) .* V(1,1); % Hastigheten för satelit 1
+            V(1,2) = (2*M(1,1)) / ((M(1,1) + M(2,2))) * Vold;
         end
+    else % De är inte tillräcklig nära för att docka -> bara sat1 är påverkad av en kraft
+        acc = F(1,1) / M(1,1);
+        V(1,1) = V(1,1) + acc*dt;
     end
 end
 
 VNEW = V;
-XNEW = X;
+XNEW = X + V*dt;
