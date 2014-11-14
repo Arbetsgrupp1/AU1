@@ -404,21 +404,25 @@ VNEW = V; % Skapar en matris för VNEW som är lika stor som V
 XNEW = X; % Skapar en matrivs för XNEW som är lika stor som X
 
 if (docked == 1) % Om sateliterna har dockat så ska en viss typ av uträkning ske
-    
-end
+    %Massan ska vara M1 + M2
+    %Bådas postiton ska uppdateras likadant.
+    mass = M(1,1) + M(2,2);
     
 
-if( (X(1,2) - X(1,1)) <= 5) %Vilkor för att Dokning eller colision ska ske
-    if( (V(1,1) - V(1.2)) <= 2) %Vilkor för att Dockning sker 
-        docked = 1;
-    else % Docking ej uppfyyllt alltså en elastisk stöt
-         
+    
+else
+    if( (X(1,2) - X(1,1)) <= 5) %Vilkor för att Dokning eller colision ska ske
+        if( (V(1,1) - V(1.2)) <= 2) %Vilkor för att Dockning sker 
+            docked = 1;
+        else % Docking ej uppfyyllt alltså en elastisk stöt
+            
         %Stöt eftersom hastigheten är större än 2m/s
+        end
+    else % Sateliterna är inte tillräkligt nära för att docka/kollidera
     end
-else % Sateliterna är inte tillräkligt nära för att docka/kollidera
-end
 
-%Uppdatera position
-acc = F(1,1)/M(1,1); % Variabel för accerlationen a = f/m
-VNEW(1,1) = V(1,1) + acc*dt;
-XNEW(1,1) = X(1,1) + VNEW(1,1)*dt;
+    %Uppdatera position
+    acc = F(1,1)./M(1,1); % Variabel för accerlationen a = f/m
+    VNEW(1,1) = V(1,1) + acc.*dt;
+    XNEW(1,1) = X(1,1) + VNEW(1,1).*dt;
+end
