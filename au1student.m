@@ -400,29 +400,28 @@ global docked   % ==0: Satelites NOT docked,  ==1: Satelites docked
 % 
 % Delete the two dummy lines below and put new code here
 
-VNEW = V; % Skapar en matris för VNEW som är lika stor som V
-XNEW = X; % Skapar en matrivs för XNEW som är lika stor som X
+%VNEW = V; % Skapar en matris för VNEW som är lika stor som V
+%XNEW = X; % Skapar en matrivs för XNEW som är lika stor som X
 
-if (docked == 1) % Om sateliterna har dockat så ska en viss typ av uträkning ske
-    %Massan ska vara M1 + M2
-    %Bådas postiton ska uppdateras likadant.
+if (docked == 1)
+    %Utför hastighets och positions beräkning för nya sateliten som är m1 +
+    %m2
     mass = M(1,1) + M(2,2);
-    
-
-    
+    acc = F(1,1)/mass;
+    V(1,1) = V(1,1)+ acc*dt; % Räknar ut hastigheten för båda sateliterna
+    V(1,2) = V(1,1); % Båda sateliterna ska ha samma hastighete eftersom de är "sammansatta"    
 else
-    if( (X(1,2) - X(1,1)) <= 5) %Vilkor för att Dokning eller colision ska ske
-        if( (V(1,1) - V(1.2)) <= 2) %Vilkor för att Dockning sker 
-            docked = 1;
-        else % Docking ej uppfyyllt alltså en elastisk stöt
+    if( abs(X(1,1) - X(1,2)) <= 5 )
+        if( abs(V(1,1) - V(1,2)) <= 2 )
+            %UTFÖR OELASTISK STÖT
+            Velo = V(1,1); % Hastigheten som satelite 1 har innan stöten
+            V(1,1)
             
-        %Stöt eftersom hastigheten är större än 2m/s
+        else
+            %UTFÖR ELASTISK
         end
-    else % Sateliterna är inte tillräkligt nära för att docka/kollidera
     end
-
-    %Uppdatera position
-    acc = F(1,1)./M(1,1); % Variabel för accerlationen a = f/m
-    VNEW(1,1) = V(1,1) + acc.*dt;
-    XNEW(1,1) = X(1,1) + VNEW(1,1).*dt;
 end
+
+VNEW = V;
+XNEW = X;
