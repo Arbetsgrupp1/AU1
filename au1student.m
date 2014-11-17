@@ -411,7 +411,7 @@ if (docked == 1)
     mass = M(1,1) + M(2,2);
     acc = F(1,1)/mass;
     VNEW(1,1) = V(1,1)+ acc*dt; % Räknar ut hastigheten för båda sateliterna
-    VNEW(1,2) = V(1,1); % Båda sateliterna ska ha samma hastighete eftersom de är "sammansatta"
+    VNEW(1,2) = V(1,1)+ acc*dt; % Båda sateliterna ska ha samma hastighete eftersom de är "sammansatta"
 else
     if( abs(X(1,1) - X(1,2)) <= 5 )
         if( abs(V(1,1) - V(1,2)) <= 2 )
