@@ -410,26 +410,27 @@ if (docked == 1)
     %m2
     mass = M(1,1) + M(2,2);
     acc = F(1,1)/mass;
-    VNEW(1,1) = V(1,1)+ acc*dt; % Räknar ut hastigheten för båda sateliterna
-    VNEW(1,2) = V(1,1); % Båda sateliterna ska ha samma hastighete eftersom de är "sammansatta"
+    V(1,1) = V(1,1)+ acc*dt; % Räknar ut hastigheten för båda sateliterna
+    V(1,2) = V(1,1); % Båda sateliterna ska ha samma hastighete eftersom de är "sammansatta"
+    (disp)
 else
     if( abs(X(1,1) - X(1,2)) <= 5 )
         if( abs(V(1,1) - V(1,2)) <= 2 )
             %Inelastiks
             docked = 1; % Sateliterna har lyckats att docka
-            VNEW(1,1) = (M(1,1)./(M(1,1) + M(2,2))) .* V(1,1);
-            VNEW(1,2) = V(1,1);
+            V(1,1) = (M(1,1)./(M(1,1) + M(2,2))) .* V(1,1);
+            V(1,2) = V(1,1);
         else
             %Elastisk
             Vold = V(1,1);
-            VNEW(1,1) = ((M(1,1)- M(2,2)) ./ ( M(1,1) + M(2,2))) .* V(1,1); % Hastigheten för satelit 1
-            VNEW(1,2) = (2*M(1,1)) / ((M(1,1) + M(2,2))) * Vold;
+            V(1,1) = ((M(1,1)- M(2,2)) ./ ( M(1,1) + M(2,2))) .* V(1,1); % Hastigheten för satelit 1
+            V(1,2) = (2*M(1,1)) / ((M(1,1) + M(2,2))) * Vold;
         end
     else % De är inte tillräcklig nära för att docka -> bara sat1 är påverkad av en kraft
         acc = F(1,1) / M(1,1);
-        VNEW(1,1) = V(1,1) + acc*dt;
+        V(1,1) = V(1,1) + acc*dt;
     end
 end
 
-%VNEW = V;
+VNEW = V;
 XNEW = X + V*dt;
