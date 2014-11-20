@@ -410,10 +410,10 @@ if (docked == 1)
     %m2
     mass = M(1,1) + M(2,2);
     acc = F(1,1)/mass;
-    VNEW(1,1) = V(1,1)+ acc*dt; % Räknar ut hastigheten för båda sateliterna
+    VNEW(1,1) = V(1,1)+ acc*dt; % Räknar ut den nya hastigheten för båda sateliterna
     VNEW(1,2) = V(1,1)+ acc*dt; % Båda sateliterna ska ha samma hastighete eftersom de är "sammansatta"
 else
-    if( abs(X(1,1) - X(1,2)) <= 5 )
+    if( abs(X(1,1) - X(1,2)) < 5 )
         if( abs(V(1,1) - V(1,2)) <= 2 )
             %Inelastiks
             docked = 1; % Sateliterna har lyckats att docka
@@ -432,4 +432,4 @@ else
 end
 
 %VNEW = V;
-XNEW = X + V*dt;
+XNEW = X + VNEW*dt;
