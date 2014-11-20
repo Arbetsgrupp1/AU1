@@ -421,15 +421,14 @@ else
             VNEW(1,2) = V(1,1);
         else
             %Elastisk
-            Vold = V(1,1);
             VNEW(1,1) = ((M(1,1)- M(2,2)) ./ ( M(1,1) + M(2,2))) .* V(1,1); % Hastigheten för satelit 1
-            VNEW(1,2) = (2*M(1,1)) / ((M(1,1) + M(2,2))) * Vold;
+            VNEW(1,2) = (2*M(1,1)) / ((M(1,1) + M(2,2))) .* V(1,1);
         end
     else % De är inte tillräcklig nära för att docka -> bara sat1 är påverkad av en kraft
         acc = F(1,1) / M(1,1);
         VNEW(1,1) = V(1,1) + acc*dt;
+        VNEW(1,2) = V(1,2);
     end
 end
 
-%VNEW = V;
 XNEW = X + VNEW*dt;
