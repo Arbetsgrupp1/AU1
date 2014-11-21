@@ -432,3 +432,5 @@ else
 end
 
 XNEW = X + VNEW*dt;
+disp(V(1,1));
+disp(V(1,2));
